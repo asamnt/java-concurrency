@@ -102,6 +102,8 @@ new MyThread.start()
   - Waiting
   - Timed Waiting
   - Terminated
+- Why is the state called Runnable, and not Running? - running _not controlled by JVM but by the OS_. depending on the cores available, scheduler of the OS schedules the thread
+- Thread.State enum will tell the current state of the thread
 
 ```mermaid
 graph LR
