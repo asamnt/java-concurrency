@@ -93,3 +93,26 @@ new MyThread.start()
 - we typically use daemon threads when you want a background thread that needs to continuously run
 - something like a monitoring thread - that needs to be run till the application is running - and not needed after that
 
+#### Thread lifecycle
+- Intuitively thinking - just created, running, blocked, terminated
+- Actual States
+  - New - creation of thread
+  - Runnable - when the thread starts
+  - Blocked
+  - Waiting
+  - Timed Waiting
+  - Terminated
+
+```mermaid
+graph LR
+A[New]-->B[Runnable]
+B --> C[Blocked]
+C --> B
+B --> D[Waiting]
+D --> B
+B --> E[Timed Waiting]
+E --> B
+
+B --> F[Terminated]
+```
+
