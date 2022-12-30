@@ -118,3 +118,28 @@ E --> B
 B --> F[Terminated]
 ```
 
+#### Joining Threads
+- Joins a certain thread with another running thread
+- we do this when we do not want to close the main program till all the threads it has spawned have stopped
+- join takes the thread to 'Waiting'
+
+#### Interrupt threads
+```java
+t.interrupt();
+```
+
+#### Parallelism vs Concurrency
+- Assume a dual core CPU, and we spin off 3 threads , each taking a long time, does that mean the third thread will not run at all till we see one of the previous threads on either of cores ends?
+- That's not how it works
+- OS has a scheduler whose responsibility is to schedule all the threads 
+- A thread might get unscheduled before it completes
+- Scheduler
+  - Tries to be fair
+  - Honors priorities
+  - Non deterministic
+- Parallelism - Many tasks _**running**_ at the same time
+  - needs multi core cpu
+- Concurrency - Many tasks _**in progress**_ at the same time but not running at the same time
+  - can be done with multi-core or single core cpu
+
+
