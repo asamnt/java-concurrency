@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class D_PrimeNumberConcurrencyWithJoining {
+public class E_PrimeNumberConcurrencyWithJoining {
 
     public static void main(String[] args) {
 

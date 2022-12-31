@@ -143,3 +143,40 @@ t.interrupt();
   - can be done with multi-core or single core cpu
 
 
+#### Need for synchronization
+- No communication, no data shared - these are simple tasks in concurrent programming
+- We want to do multithreading because we want to make efficient use of the cores available
+  ![image](./processor.png)
+- Each core comes with its own memory called processor cache
+- Memory that you think of your memory - RAM different from processor cache
+- Processor cache - L1(specific to cores), L2(specific to cores) and L3 (shared cache)
+- Memory to cache communication happens through system bus
+- Processor is makin a copy in the internal cache and then copy it over back after processing to the system memory
+- When multiple threads are working on same value of i - we may have a problem
+- Threads that just read the data - no issues
+
+#### Common Race conditions
+- Check-then-act
+  - between the check and the act, the value of the data may change
+- Read-modify-write
+  - you read one value, then it gets updated by some other thread, but you are not aware, and continue to work with the old value
+
+#### Solving Race Conditions
+- we co-ordinate when a certain thread gets access to a thread
+- make sure only one thread can "pick up" a data element
+- Lock and key model
+  - No two threads can access the same piece of code at the same time
+  - Synchronization of threads
+  - control data, not code
+  - provided by JVM
+
+#### How Synchronization works
+- JVM creates a "virtual" lock from the data element
+- Thread tries to "acquire" a lock
+- If it acquires it, it can execute the synchronized code
+- Thread finishes executing block and releases lock
+- All other threads that need to execute the same block will have to wait
+
+
+
+
