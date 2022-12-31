@@ -176,6 +176,56 @@ t.interrupt();
 - If it acquires it, it can execute the synchronized code
 - Thread finishes executing block and releases lock
 - All other threads that need to execute the same block will have to wait
+- Monitor Lock
+  - two different synchronized blocks can be synchronized with the same object ref
+  - and that would mean as below two diff pieces of code sync with the obj1 ref
+  - so two threads even if they are running two different methods, cannot run the synchronized block at the same time, as they are locked by the same obj ref
+```java
+public void methodA(){
+    synchronized(obj1){
+        
+    }
+}
+
+public void methodB(){
+    synchronized(obj1){
+
+    }
+}
+```
+- Locking using this ref - instance locking
+  - when you do this you are locking on the instance, so two threads working on different instances of the same class can run the same synchronized blocks of code at the same time
+
+```java
+public void methodA(){
+    synchronized(this){
+        
+    }
+}
+
+public void methodB(){
+    synchronized(this){
+
+    }
+}
+```
+- Synchronized can be used for the complete method
+```java
+public synchronized increment(){
+
+}
+```
+
+#### What does synchronization achieve?
+- Mutual Exclusion - also commonly known as mutex
+- Visibility
+  - Value is read from the memory before block execution
+  - Value is written to memory after block execution
+- Structured Lock
+  - Block structure using synchronized
+  - Acquiring and releasing locks is implicit - we don't do it actually we just mention where we need a lock
+  - if exception occurs in the sync block, the JVM releases the lock - and we don't have to worry about it
+
 
 
 
