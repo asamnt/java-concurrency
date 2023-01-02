@@ -223,8 +223,85 @@ public synchronized increment(){
   - Value is written to memory after block execution
 - Structured Lock
   - Block structure using synchronized
-  - Acquiring and releasing locks is implicit - we don't do it actually we just mention where we need a lock
+  - Acquiring and releasing locks is implicit - we don't do it actually - we just mention where we need a lock
   - if exception occurs in the sync block, the JVM releases the lock - and we don't have to worry about it
+
+#### Problems with mutual exclusion
+- How to achieve concurrency issues?
+  - Don't have shared state - no concurrency issues
+  - Share only immutable values - we again don't have a problem
+  - Use synchronization
+- Is something thread safe - which means will it avoid race conditions?
+- Disadvantages of using synchronized blocks
+  - Performance
+    - we need to apply it carefully
+    - we chose the right object for locking
+    - synchronize the bare min code necessary
+  - Extreme Synchronization
+  - Choosing the wrong lock - if we want thread executing method A to be able to execute it without any issues, we must acquire a lock on the methodB synchronized block and that means the object ref must be same(below it is different and could be a problem)
+```java
+public void methodA(){
+    synchronized(obj1){
+        //some other code
+        methodB()
+        
+    }
+}
+
+public void methodB(){
+    synchronized(obj2){
+
+    }
+}
+```
+
+#### Liveness - what does it mean?
+- State of general activity and motion
+- Requires a system to make progress
+- Not stuck
+- Something good will eventually occur
+- Liveness issues with concurrency
+  - Deadlock
+    - Multiple threads are waiting for other threads - Thread A waiting for Thread B and vice versa
+    ```java
+    synchronized(obj1){
+        synchronized(obj2){
+    
+        }
+    }
+    
+    synchronized(obj2){
+        synchronized(obj1){
+    
+        }
+    }
+
+    ```
+    - Two threads invoking join on each other
+  - Livelock - a smarter deadlock - we are trying to avoid deadlock using a perpetual "corrective" action
+    - Thread 1 tries to get lock A
+    - Thread 1 then tries to get lock B
+    - if lock B not acquired in x ms, release lock A
+    - Try again after some time
+    - Imagine Thread 2 also doing the same thing - here we don't have a deadlock, but even then the application is not progressing because the threads are doing the same thing simultaneously
+  - Starvation
+    - Thread is ready to run but never given a chance
+    - Low priority thread not scheduled by executor - Indefinite Postponement
+    
+#### How to avoid Liveness issues?
+- No Java/JVM feature to avoid them
+- Careful use of locks
+- Avoid using more than one lock
+
+#### Volatile keyword
+- Marks a variable as "Do not cache"
+- Every read/write is from memory
+- Thread 1 write variable(to memory)
+- Thread 2 reads varibale(from memory)
+- If the above operations are sequential then there is a guarantee that Thread 2 will read the value that Thread 1 has written
+- This guarantee is because of the "volative" keyword
+- If no volatile keyword then it is possible that Thread 1 has written only to processor cache and not yet flushed to memory and Thread 2 is reading it
+- This applies to other variables in the thread too
 
 
 
