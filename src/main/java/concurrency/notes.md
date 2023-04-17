@@ -297,9 +297,9 @@ public void methodB(){
 - Marks a variable as "Do not cache"
 - Every read/write is from memory
 - Thread 1 write variable(to memory)
-- Thread 2 reads varibale(from memory)
+- Thread 2 reads variable(from memory)
 - If the above operations are sequential then there is a guarantee that Thread 2 will read the value that Thread 1 has written
-- This guarantee is because of the "volative" keyword
+- This guarantee is because of the "volatile" keyword
 - If no volatile keyword then it is possible that Thread 1 has written only to processor cache and not yet flushed to memory and Thread 2 is reading it
 - This applies to other variables in the thread too
 
